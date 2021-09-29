@@ -20,6 +20,7 @@ namespace UserMaintenance
             InitializeComponent();
             lblFullName.Text = ResourceFile.FullName;
             btnAdd.Text = ResourceFile.Add;
+            btnFileWriting.Text = ResourceFile.FileWriting;
 
             listUser.DataSource = users;
             listUser.ValueMember = "ID";
@@ -33,6 +34,17 @@ namespace UserMaintenance
                 FullName = txtFullName.Text,
             };
             users.Add(u);
+        }
+
+        private void btnFileWriting_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Application.StartupPath;
+            sfd.Filter = "Comma Seperated Values (*.csv)|*.csv";
+            sfd.DefaultExt = "csv";
+            sfd.AddExtension = true;
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
         }
     }
 }
