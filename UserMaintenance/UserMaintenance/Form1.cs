@@ -62,7 +62,9 @@ namespace UserMaintenance
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            users.Remove((User)listUser.SelectedItem);
+            var remu = listUser.SelectedItem;
+            if(remu != null)
+            users.Remove((User)remu);
         }
     }
 }
