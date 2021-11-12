@@ -30,12 +30,47 @@ namespace WEEK__
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.MainPanel = new System.Windows.Forms.Panel();
+            this.createTimer = new System.Windows.Forms.Timer(this.components);
+            this.conveyorTimer = new System.Windows.Forms.Timer(this.components);
+            this.SuspendLayout();
+            // 
+            // MainPanel
+            // 
+            this.MainPanel.Location = new System.Drawing.Point(12, 99);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Size = new System.Drawing.Size(776, 339);
+            this.MainPanel.TabIndex = 0;
+            // 
+            // createTimer
+            // 
+            this.createTimer.Enabled = true;
+            this.createTimer.Interval = 3000;
+            this.createTimer.Tick += new System.EventHandler(this.createTimer_Tick);
+            // 
+            // conveyorTimer
+            // 
+            this.conveyorTimer.Enabled = true;
+            this.conveyorTimer.Interval = 10;
+            this.conveyorTimer.Tick += new System.EventHandler(this.conveyorTimer_Tick);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.MainPanel);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel MainPanel;
+        private System.Windows.Forms.Timer createTimer;
+        private System.Windows.Forms.Timer conveyorTimer;
     }
 }
 
