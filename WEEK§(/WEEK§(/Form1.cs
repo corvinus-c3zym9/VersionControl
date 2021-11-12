@@ -15,6 +15,7 @@ namespace WEEK__
         public Form1()
         {
             InitializeComponent();
+
         }
     }
 }
