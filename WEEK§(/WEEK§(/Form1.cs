@@ -31,7 +31,7 @@ namespace WEEK__
         private void createTimer_Tick(object sender, EventArgs e)
         {
             var ball = Factory.CreateNew();
-            _ball.Add(ball);
+            _ball.Add((Ball)ball);
             MainPanel.Controls.Add(ball);
             ball.Left = -ball.Width;
         }
@@ -41,7 +41,7 @@ namespace WEEK__
             var maxPosition = 0;
             foreach (var ball in _ball)
             {
-                ball.MoveBall();
+                ball.MoveToy();
                 if (ball.Left > maxPosition)
                     maxPosition = ball.Left;
             }
