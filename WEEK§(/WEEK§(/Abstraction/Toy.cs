@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace WEEK__.Abstractions
 {
-    public class Toy : Label
+    public abstract class Toy : Label
     {
         public Toy()
         {
@@ -23,10 +23,7 @@ namespace WEEK__.Abstractions
             DrawImage(e.Graphics);
         }
 
-        protected void DrawImage(Graphics g)
-        {
-            g.FillEllipse(new SolidBrush(Color.Blue), 0, 0, Width, Height);
-        }
+        protected abstract void DrawImage(Graphics g);
 
         public void MoveToy()
         {
