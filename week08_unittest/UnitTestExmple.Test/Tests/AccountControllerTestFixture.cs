@@ -89,7 +89,7 @@ namespace UnitTestExample.Tests
             catch (Exception ex)
             {
 
-                NUnit.Framework.Assert.IsInstanceOf<ValidateException>(ex);
+                NUnit.Framework.Assert.IsInstanceOf<ValidationException>(ex);
             }
             
         }
