@@ -39,7 +39,7 @@ namespace UnitTestExample.Tests
             TestCase("ABCD1234", false),
             TestCase("abcdABCD", false),
             TestCase("abcdAB1234", false),
-            TestCase("abcdABCD1234", true)
+            TestCase("abCDEFGH1234", true)
         ]
         public void TestValidationPassword(string password, bool expectedResult)
         {
@@ -56,7 +56,7 @@ namespace UnitTestExample.Tests
             TestCase("irf@uni-corvinus.hu", "Abcd1234"),
             TestCase("irf@uni-corvinus.hu", "Abcd1234567"),
         ]
-        public void TestRegisterHappyPass(string email, string password)
+        public void TestRegisterHappyPath(string email, string password)
         {
             var accountController = new AccountController();
 
