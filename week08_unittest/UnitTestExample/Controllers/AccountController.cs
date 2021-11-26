@@ -32,6 +32,7 @@ namespace UnitTestExample.Controllers
 
             var account = new Account()
             {
+                ID = Guid.NewGuid(),
                 Email = email,
                 Password = password
             };
@@ -41,10 +42,7 @@ namespace UnitTestExample.Controllers
             return newAccount;
         }
 
-        public bool ValidatePassword(string password)
-        {
-            return Regex.IsMatch(password, @"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
-        }
+        
 
         public bool ValidateEmail(string email)
         {            
@@ -53,6 +51,26 @@ namespace UnitTestExample.Controllers
                 @"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
         }
 
-        
+        public bool ValidatePassword(string password)
+        {
+            if (!Regex.IsMatch(password, @"^[a-zA-Z0-9]{8,}$"))
+            {
+                return false;
+            }
+            else if (!Regex.IsMatch(password, @"^[a-z]."))
+            {
+                return false;
+            }
+            else if (!Regex.IsMatch(password, @"^[A-Z]."))
+            {
+                return false;
+            }
+            else if (!Regex.IsMatch(password, @"^[0-9]."))
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using System;
 using UnitTestExample.Controllers;
+using System.Activities;
 
 namespace UnitTestExample.Tests
 {
@@ -33,9 +35,11 @@ namespace UnitTestExample.Tests
 
         [
             Test,
-            TestCase("abcdefg", false),
-            TestCase("ABCDEFG", false),
-            TestCase("Abcdefg1", true)
+            TestCase("abcd1234", false),
+            TestCase("ABCD1234", false),
+            TestCase("abcdABCD", false),
+            TestCase("abcdAB1234", false),
+            TestCase("abcdABCD1234", true)
         ]
         public void TestValidationPassword(string password, bool expectedResult)
         {
@@ -44,6 +48,50 @@ namespace UnitTestExample.Tests
             var actualResult = accountController.ValidateEmail(password);
 
             Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedResult, actualResult);
+        }
+
+
+        [
+            Test,
+            TestCase("irf@uni-corvinus.hu", "Abcd1234"),
+            TestCase("irf@uni-corvinus.hu", "Abcd1234567"),
+        ]
+        public void TestRegisterHappyPass(string email, string password)
+        {
+            var accountController = new AccountController();
+
+            var actualResult = accountController.Register(email, password);
+
+            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(email, actualResult.Email);
+            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(password, actualResult.Password);
+            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotEqual(Guid.Empty, actualResult.ID);
+        }
+
+
+        [
+            Test,
+            TestCase("irf@uni-corvinus", "Abcd1234"),
+            TestCase("irf.uni-corvinus.hu", "Abcd1234"),
+            TestCase("irf@uni-corvinus.hu", "abcd1234"),
+            TestCase("irf@uni-corvinus.hu", "ABCD1234"),
+            TestCase("irf@uni-corvinus.hu", "abcdABCD"),
+            TestCase("irf@uni-corvinus.hu", "Ab1234"),
+        ]
+        public void TestRegisterValidateException(string email, string password)
+        {
+            var accountController = new AccountController();
+
+            try
+            {
+                var actualResult = accountController.Register(email, password);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+
+                NUnit.Framework.Assert.IsInstanceOf<ValidateException>(ex);
+            }
+            
         }
     }
 }
