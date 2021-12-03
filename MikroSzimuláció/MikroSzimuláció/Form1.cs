@@ -22,9 +22,9 @@ namespace MikroSzimuláció
         {
             InitializeComponent();
 
-            Population = GetPopulation(@"C:\Temp\nép-teszt.csv");
-            //BirthProbabilities = GetBirthProbabilities(@"C:\Temp\születés.csv");
-            //DeathProbabilities = GetDeathProbabilities(@"C:\Temp\halál.csv");
+            Population = GetPopulation(@"C:\Users\User\Desktop\BCE\5\IRF\Temp\nép-teszt.csv"); //C:\Users\User\Desktop\BCE\5\IRF\Temp
+            BirthProbabilities = GetBirthProbabilities(@"C:\Users\User\Desktop\BCE\5\IRF\Temp\születés.csv");
+            DeathProbabilities = GetDeathProbabilities(@"C:\Users\User\Desktop\BCE\5\IRF\Temp\halál.csv");
         }
 
         public List<Person> GetPopulation(string csvpath) //létrehozunk egy változót
@@ -49,5 +49,48 @@ namespace MikroSzimuláció
             return population; //visszaadjuk a belső függvény értékét
         }
 
+        public List<BirthProbability> GetBirthProbabilities(string csvpath) //létrehozunk egy változót
+        {
+            List<BirthProbability> population = new List<BirthProbability>(); //létrehozunk egy függvényt
+
+            using (var sr = new StreamReader(csvpath, Encoding.Default))
+            {
+                //ha lenne header, akkor sr.ReadLine();
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine().Split(';');
+                    population.Add(new BirthProbability()
+                    {
+                        Age = int.Parse(line[0]),
+                        NbrOfChildren = int.Parse(line[1]),
+                        P = double.Parse(line[2])
+                    });
+                }
+            }
+
+            return population; //visszaadjuk a belső függvény értékét
+        }
+
+        public List<DeathProbability> GetDeathProbabilities(string csvpath) //létrehozunk egy változót
+        {
+            List<DeathProbability> population = new List<DeathProbability>(); //létrehozunk egy függvényt
+
+            using (var sr = new StreamReader(csvpath, Encoding.Default))
+            {
+                //ha lenne header, akkor sr.ReadLine();
+                while (!sr.EndOfStream)
+                {
+                    var line = sr.ReadLine().Split(';');
+                    population.Add(new DeathProbability()
+                    {
+                        Gender = (Gender)Enum.Parse(typeof(Gender), line[0]),
+                        Age = int.Parse(line[1]),
+                        P = double.Parse(line[2])
+                    });
+                }
+            }
+
+            return population; //visszaadjuk a belső függvény értékét
+        }
     }
 }
