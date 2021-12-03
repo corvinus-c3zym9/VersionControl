@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MikroSzimuláció.Entities
 {
-    public class BirtProbability
+    public class Person
     {
         public int BirthYear { get; set; }
         public Gender Gender { get; set; }
@@ -16,7 +16,7 @@ namespace MikroSzimuláció.Entities
         //bool változókat szokás IS-zel kezdeni
         //a boolra azért van szükség, hogyha esetleg meghalnak emberek adott évben pl össze lehessen számolni és nem törlődjön automatikusan
 
-        public BirtProbability()
+        public Person()
         {
             IsAlive = true;
         }
