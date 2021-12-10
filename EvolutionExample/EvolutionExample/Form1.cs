@@ -21,6 +21,8 @@ namespace EvolutionExample
         int nbrOfStepsIncrement = 10;
         int generation = 1;
 
+        Brain winnerBrain = null;
+
         public Form1()
         {
             InitializeComponent();
@@ -59,6 +61,17 @@ namespace EvolutionExample
             //Az újraindítás azonban törölni fogja az eredeti játékoslistát, így a referencia típusú listánk is kiürülne, tehát nem férnénk hozzá a lementett játékosainkhoz.
             //A ToList metódus hivatkozás helyett egy új listát generál, amely a megfelelő játékosokra hivatkozik, így már nem jelent problémát, hogy az eredeti lista időközben kiürül.
 
+            var winners = from p in topPerformers
+                         where p.IsWinner //ha ide !p.Winner-t írunkk, akkor már az első játék után is kipróbálhatjuk a kézi vezérlést
+                         select p;
+            if (winners.Count() > 0)
+            {
+                winnerBrain = winners.FirstOrDefault().Brain.Clone(); //lementjük az első "agyát" további versenyzés céljára
+                gc.GameOver -= Gc_GameOver; //ha elérjük a célt, akkor nem indul újra
+                button1.Visible = true;
+                return;
+            }
+
             gc.ResetCurrentLevel();
             foreach (var p in topPerformers)
             {
@@ -78,6 +91,15 @@ namespace EvolutionExample
                     gc.AddPlayer(b.Mutate());
             }
             gc.Start();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            gc.ResetCurrentLevel(); //reseteljük az egész versenyt
+            gc.AddPlayer(winnerBrain.Clone()); //a győztes "agyát" klónozva adjuk be, hogy ezzel tudjunk játszani
+            gc.AddPlayer();
+            ga.Focus();
+            gc.Start(true);
         }
     }
 }
